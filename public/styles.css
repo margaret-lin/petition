@@ -1,0 +1,46 @@
+* {
+    background-color: ivory;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    height: 50px;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 32px;
+    font-weight: 300;
+    margin: 0px;
+    background-color: lightpink;
+}
+
+main {
+    width: 100%;
+    flex: 1 0 auto;
+    justify-content: center;
+}
+
+canvas {
+    border: 2px black solid;
+}
+
+.petition-main {
+    align-items: flex-start;
+    justify-content: center;
+}
+
+footer {
+    height: 50px;
+    padding-top: 10px;
+    text-align: center;
+    background-color: lightpink;
+    flex-shrink: 0;
+}
