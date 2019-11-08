@@ -1,15 +1,23 @@
 var spicedPg = require("spiced-pg");
 var db = spicedPg("postgres:postgres:postgres@localhost:5432/petition");
 
-// 'SELECT city, population FROM cities'
-
-module.exports.getCities = function getCities() {
-    return db.query("SELECT * FROM cities");
+exports.userInfo = function userInfo(first, last) {
+    return db.query("INSERT INTO signatures (first, last) VALUES ($1, $2)", [
+        first,
+        last
+    ]);
 };
 
-module.exports.addCity = function getCities(city, population) {
-    return db.query("INSERT INTO cities (city, population) VALUES ($1, $2)", [
-        city,
-        population
+exports.selectUser = function selectUser(first, last) {
+    return db.query("SELECT signatures FROM signatures VALUES ($1, $2)", [
+        first,
+        last
+    ]);
+};
+
+exports.selectUser = function selectUser(first, last) {
+    return db.query("SELECT signatures FROM signatures VALUES ($1, $2)", [
+        first,
+        last
     ]);
 };

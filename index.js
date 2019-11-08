@@ -1,10 +1,16 @@
 const express = require("express");
 const app = express();
 const hb = require("express-handlebars");
-// const db = require("./utils/db'");
+const db = require("./utils/db");
 
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
+
+app.use(
+    express.urlencoded({
+        extended: false
+    })
+);
 
 app.use(express.static("./public"));
 
@@ -12,6 +18,20 @@ app.get("/petition", (req, res) => {
     res.render("petition", {
         layout: "main"
     });
+});
+
+app.post("/petition", (req, res) => {
+    // console.log("made it to peition route");
+    console.log("rec body", req.body);
+
+    db.userInfo("Sarajevo", 700000)
+        .then(() => {
+            res.redirect("/signed");
+            console.log("inserting names!");
+        })
+        .catch(err => {
+            console.log("post error:", err);
+        });
 });
 
 app.get("/signed", (req, res) => {

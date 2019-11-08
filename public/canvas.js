@@ -1,79 +1,75 @@
-// var smallCanvas = document.getElementById("small-canvas");
-// var bigCanvas = document.getElementById("big-canvas");
-// var c = smallCanvas.getContext("2d");
-// var b = bigCanvas.getContext("2d");
+// When true, moving the mouse draws on the canvas
+let isDrawing = false;
+let x = 0;
+let y = 0;
 
-// c.strokeStyle = "black";
-// c.lineWidth = 2;
-// c.beginPath();
-// c.arc(25, 10, 6, 0, Math.PI * 2);
-// c.fillStyle = "chocolate";
-// c.fill();
-// c.stroke();
+let canvas = document.getElementById("canvas");
+let context = canvas.getContext("2d");
+let dataURL = canvas.toDataURL();
 
-// //body
-// c.lineWidth = 2;
-// c.beginPath();
-// c.moveTo(25, 16);
-// c.lineTo(25, 35);
-// c.closePath();
-// c.stroke();
-// // arms
-// c.lineWidth = 2;
-// c.beginPath();
-// c.moveTo(15, 15);
-// c.lineTo(25, 22.5);
-// c.moveTo(25, 22.5);
-// c.lineTo(35, 15);
-// c.closePath();
-// c.stroke();
-// // legs
-// c.lineWidth = 2;
-// c.beginPath();
-// c.moveTo(25, 35);
-// c.lineTo(35, 40);
-// c.moveTo(15, 40);
-// c.lineTo(25, 35);
-// c.closePath();
-// c.stroke();
+// The x and y offset of the canvas from the edge of the page
+const rect = canvas.getBoundingClientRect();
 
-// var x = 0;
-// var y = 0;
-// // /*
-// // BONUS exercise
-// // Make your stick figure move around the canvas in response to clicks on arrow keys by the user. Use two canvases: one on which the stick figure is drawn, and another, larger canvas on which the first canvas is drawn as an image.
-// // */
-// (function() {
-//     b.drawImage(smallCanvas, 0, 0, 100, 100);
+// Add the event listeners for mousedown, mousemove, and mouseup
+canvas.addEventListener("mousedown", e => {
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+    isDrawing = true;
+});
 
-//     document.addEventListener("keydown", function(event) {
-//         if (event.keyCode === 37) {
-//             if (x >= 0) {
-//                 x -= 10; //move left
-//                 renderDraw();
-//             }
-//         } else if (event.keyCode === 38) {
-//             if (y >= 10) {
-//                 y -= 10; //move up
-//                 renderDraw();
-//             }
-//         } else if (event.keyCode === 39) {
-//             if (x <= 450) {
-//                 x += 10; //move right
-//                 renderDraw();
-//             }
-//         } else if (event.keyCode === 40) {
-//             if (y <= 445) {
-//                 y += 10; //move down
-//                 renderDraw();
-//             }
-//         }
+canvas.addEventListener("mousemove", e => {
+    if (isDrawing === true) {
+        drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top);
+        x = e.clientX - rect.left;
+        y = e.clientY - rect.top;
+    }
+});
+
+window.addEventListener("mouseup", e => {
+    if (isDrawing === true) {
+        drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top);
+        x = 0;
+        y = 0;
+        isDrawing = false;
+    }
+    document.getElementById("signature").value = dataURL;
+    console.log("dataurl", dataURL);
+});
+
+function drawLine(context, x1, y1, x2, y2) {
+    context.beginPath();
+    context.strokeStyle = "black";
+    context.lineWidth = 1;
+    context.moveTo(x1, y1);
+    context.lineTo(x2, y2);
+    context.stroke();
+    context.closePath();
+}
+
+// var canvas = $("#canvas");
+// var myContext = canvas[0].getContext("2d");
+// var dataURL = canvas[0].toDataURL();
+
+// $(document).on("mousedown", function(e) {
+//     var left = e.clientX - canvas.offset().left;
+//     var top = e.clientY - canvas.offset().top;
+
+//     myContext.lineWidth = 2;
+//     myContext.beginPath();
+//     myContext.moveTo(left, top);
+//     console.log("mousedown");
+
+//     $(document).on("mousemove", function(e) {
+//         var left = e.clientX - canvas.offset().left;
+//         var top = e.clientY - canvas.offset().top;
+//         myContext.lineTo(left, top);
+//         myContext.stroke();
+//         console.log("mousemove");
 //     });
-// })();
+// });
 
-// function renderDraw() {
-//     //clear the canvas after each move
-//     b.clearRect(0, 0, bigCanvas.height, bigCanvas.width);
-//     //then redraw a new one after each clear
-//     b.drawImage(smallCanvas, x, y, 100, 100);
-// }
+// $(document).on("mouseup", function(e) {
+//     console.log("mouseup!");
+
+// $('input[name="signature"]').val(dataURL);
+// });
