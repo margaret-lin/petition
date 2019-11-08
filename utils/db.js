@@ -15,9 +15,6 @@ exports.selectUser = function selectUser(first, last) {
     ]);
 };
 
-exports.selectUser = function selectUser(first, last) {
-    return db.query("SELECT signatures FROM signatures VALUES ($1, $2)", [
-        first,
-        last
-    ]);
+exports.selectSig = function selectSig() {
+    return db.query("SELECT COUNT(*) FROM signatures");
 };

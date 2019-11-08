@@ -24,7 +24,7 @@ app.post("/petition", (req, res) => {
     // console.log("made it to peition route");
     console.log("rec body", req.body);
 
-    db.userInfo("Sarajevo", 700000)
+    db.userInfo(req.body.first, req.body.last)
         .then(() => {
             res.redirect("/signed");
             console.log("inserting names!");
@@ -35,9 +35,20 @@ app.post("/petition", (req, res) => {
 });
 
 app.get("/signed", (req, res) => {
-    res.render("signed", {
-        layout: "main"
-    });
+    console.log("sigs", db.selectSig);
+
+    db.selectSig()
+        .then(({ rows }) => {
+            let numOfSigners = rows[0].count;
+            console.log("rows: ");
+            res.render("signed", {
+                layout: "main",
+                num: numOfSigners
+            });
+        })
+        .catch(err => {
+            console.log("post error:", err);
+        });
 });
 
 app.get("/participants", (req, res) => {
