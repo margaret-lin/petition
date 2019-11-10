@@ -3,29 +3,31 @@ const app = express();
 const hb = require('express-handlebars');
 const db = require('./utils/db');
 const cookieSession = require('cookie-session');
+// const signedUser = (req, res, next) => {
+//     if (req.session.sigId && req.url !== '/signed') {
+//         res.redirect('/signed');
+//     }
+//     next();
+// };
 
 app.engine('handlebars', hb());
 app.set('view engine', 'handlebars');
 
+app.use(express.urlencoded({ extended: false }));
 app.use(
-    express.urlencoded({
-        extended: false
-    })
+    cookieSession({ secret: `my secret`, maxAge: 1000 * 60 * 60 * 24 * 14 })
 );
-
-app.use(
-    cookieSession({
-        secret: `my secret`,
-        maxAge: 1000 * 60 * 60 * 24 * 14
-    })
-);
-
+// app.use(signedUser);
 app.use(express.static('./public'));
 
 app.get('/petition', (req, res) => {
-    res.render('petition', {
-        layout: 'main'
-    });
+    if (req.session.sigId) {
+        res.redirect('/signed');
+    } else {
+        res.render('petition', {
+            layout: 'main'
+        });
+    }
 });
 
 app.post('/petition', (req, res) => {
@@ -44,6 +46,10 @@ app.post('/petition', (req, res) => {
 });
 
 app.get('/signed', (req, res) => {
+    if (!req.session.sigId) {
+        res.redirect('/petition');
+        return;
+    }
     db.getSig(req.session.sigId).then(({ rows }) => {
         let imageSig = rows[0].signature;
 
