@@ -2,17 +2,25 @@ const express = require('express');
 const app = express();
 const hb = require('express-handlebars');
 const db = require('./utils/db');
+const csurf = require('csurf');
 const cookieSession = require('cookie-session');
 
 app.engine('handlebars', hb());
 app.set('view engine', 'handlebars');
 
+// middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(
     cookieSession({ secret: `my secret`, maxAge: 1000 * 60 * 60 * 24 * 14 })
 );
+app.use(csurf());
+app.use(function(req, res, next) {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
 app.use(express.static('./public'));
 
+// routes
 app.get('/petition', (req, res) => {
     if (req.session.sigId) {
         res.redirect('/signed');
