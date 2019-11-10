@@ -3,47 +3,62 @@ let isDrawing = false;
 let x = 0;
 let y = 0;
 
-let canvas = document.getElementById("canvas");
-let context = canvas.getContext("2d");
-let dataURL = canvas.toDataURL();
+let canvas = document.getElementById('canvas');
 
-// The x and y offset of the canvas from the edge of the page
-const rect = canvas.getBoundingClientRect();
+if (canvas) {
+    let context = canvas.getContext('2d');
+    let dataURL = canvas.toDataURL();
 
-// Add the event listeners for mousedown, mousemove, and mouseup
-canvas.addEventListener("mousedown", e => {
-    x = e.clientX - rect.left;
-    y = e.clientY - rect.top;
-    isDrawing = true;
-});
+    // The x and y offset of the canvas from the edge of the page
+    const rect = canvas.getBoundingClientRect();
 
-canvas.addEventListener("mousemove", e => {
-    if (isDrawing === true) {
-        drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top);
+    // Add the event listeners for mousedown, mousemove, and mouseup
+    canvas.addEventListener('mousedown', e => {
         x = e.clientX - rect.left;
         y = e.clientY - rect.top;
-    }
-});
+        isDrawing = true;
+    });
 
-window.addEventListener("mouseup", e => {
-    if (isDrawing === true) {
-        drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top);
-        x = 0;
-        y = 0;
-        isDrawing = false;
-    }
-    document.getElementById("signature").value = dataURL;
-    console.log("dataurl", dataURL);
-});
+    canvas.addEventListener('mousemove', e => {
+        if (isDrawing === true) {
+            drawLine(
+                context,
+                x,
+                y,
+                e.clientX - rect.left,
+                e.clientY - rect.top
+            );
+            x = e.clientX - rect.left;
+            y = e.clientY - rect.top;
+        }
+    });
 
-function drawLine(context, x1, y1, x2, y2) {
-    context.beginPath();
-    context.strokeStyle = "black";
-    context.lineWidth = 1;
-    context.moveTo(x1, y1);
-    context.lineTo(x2, y2);
-    context.stroke();
-    context.closePath();
+    window.addEventListener('mouseup', e => {
+        if (isDrawing === true) {
+            drawLine(
+                context,
+                x,
+                y,
+                e.clientX - rect.left,
+                e.clientY - rect.top
+            );
+            x = 0;
+            y = 0;
+            isDrawing = false;
+        }
+        document.getElementById('signature').value = dataURL;
+        console.log('dataurl', dataURL);
+    });
+
+    function drawLine(context, x1, y1, x2, y2) {
+        context.beginPath();
+        context.strokeStyle = 'black';
+        context.lineWidth = 1;
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.stroke();
+        context.closePath();
+    }
 }
 
 // var canvas = $("#canvas");

@@ -1,10 +1,11 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const hb = require("express-handlebars");
-const db = require("./utils/db");
+const hb = require('express-handlebars');
+const db = require('./utils/db');
+const cookieSession = require('cookie-session');
 
-app.engine("handlebars", hb());
-app.set("view engine", "handlebars");
+app.engine('handlebars', hb());
+app.set('view engine', 'handlebars');
 
 app.use(
     express.urlencoded({
@@ -12,65 +13,57 @@ app.use(
     })
 );
 
-app.use(express.static("./public"));
+app.use(
+    cookieSession({
+        secret: `my secret`,
+        maxAge: 1000 * 60 * 60 * 24 * 14
+    })
+);
 
-app.get("/petition", (req, res) => {
-    res.render("petition", {
-        layout: "main"
+app.use(express.static('./public'));
+
+app.get('/petition', (req, res) => {
+    res.render('petition', {
+        layout: 'main'
     });
 });
 
-app.post("/petition", (req, res) => {
+app.post('/petition', (req, res) => {
     // console.log("made it to peition route");
-    console.log("rec body", req.body);
+    console.log('rec body', req.body);
 
-    db.userInfo(req.body.first, req.body.last)
-        .then(() => {
-            res.redirect("/signed");
-            console.log("inserting names!");
+    db.userInfo(req.body.first, req.body.last, req.body.sig)
+        .then(({ rows }) => {
+            req.session.sigId = rows[0].id;
+            console.log('my cookie session', req.session.sigId);
+            res.redirect('/signed');
         })
         .catch(err => {
-            console.log("post error:", err);
+            console.log('post error:', err);
         });
 });
 
-app.get("/signed", (req, res) => {
-    console.log("sigs", db.selectSig);
+app.get('/signed', (req, res) => {
+    db.getSig(req.session.sigId).then(result => {
+        console.log('im here', result);
+    });
 
     db.selectSig()
         .then(({ rows }) => {
-            let numOfSigners = rows[0].count;
-            console.log("rows: ");
-            res.render("signed", {
-                layout: "main",
-                num: numOfSigners
+            res.render('signed', {
+                layout: 'main',
+                num: rows[0].count
             });
         })
         .catch(err => {
-            console.log("post error:", err);
+            console.log('post error:', err);
         });
 });
 
-app.get("/participants", (req, res) => {
-    res.render("participants", {
-        layout: "main"
+app.get('/participants', (req, res) => {
+    res.render('participants', {
+        layout: 'main'
     });
 });
 
-app.listen(8080, () => console.log("I am listening!!"));
-
-// app.post("/add-city", (req, res) => {
-//     db.addCity("Taipei", 800000).then(() => {
-//         console.log("sucessful");
-//     });
-// });
-
-// app.get("/cities", (req, res) => {
-//     db.getCities()
-//         .then(({ rows }) => {
-//             console.log("rows: ", rows);
-//         })
-//         .catch(err => {
-//             console.log("errr in results", err);
-//         });
-// });
+app.listen(8080, () => console.log('I am listening!!'));
