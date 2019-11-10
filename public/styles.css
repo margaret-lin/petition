@@ -7,6 +7,14 @@ body {
     height: 100%;
 }
 
+.hidden {
+    display: none;
+}
+
+#sig-error {
+    color: red;
+}
+
 body {
     display: flex;
     flex-direction: column;

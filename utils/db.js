@@ -8,11 +8,8 @@ exports.userInfo = function userInfo(first, last, sig) {
     );
 };
 
-exports.selectUser = function selectUser(first, last) {
-    return db.query('SELECT signatures FROM signatures VALUES ($1, $2)', [
-        first,
-        last
-    ]);
+exports.getSigners = function getSigners() {
+    return db.query('SELECT first, last FROM signatures');
 };
 
 exports.selectSig = function selectSig() {
