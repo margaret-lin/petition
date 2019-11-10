@@ -7,7 +7,6 @@ let canvas = document.getElementById('canvas');
 
 if (canvas) {
     let context = canvas.getContext('2d');
-    let dataURL = canvas.toDataURL();
 
     // The x and y offset of the canvas from the edge of the page
     const rect = canvas.getBoundingClientRect();
@@ -46,8 +45,8 @@ if (canvas) {
             y = 0;
             isDrawing = false;
         }
-        document.getElementById('signature').value = dataURL;
-        console.log('dataurl', dataURL);
+        document.getElementById('signature').value = canvas.toDataURL();
+        console.log('dataurl', canvas.toDataURL());
     });
 
     function drawLine(context, x1, y1, x2, y2) {

@@ -4,7 +4,7 @@ var db = spicedPg('postgres:postgres:postgres@localhost:5432/petition');
 exports.userInfo = function userInfo(first, last, sig) {
     return db.query(
         'INSERT INTO signatures (first, last, signature) VALUES ($1, $2, $3) RETURNING id',
-        [first, last, 'me']
+        [first, last, sig]
     );
 };
 
@@ -20,5 +20,5 @@ exports.selectSig = function selectSig() {
 };
 
 exports.getSig = function getSig(id) {
-    return db.query('SELECT signatures FROM signatures WHERE id = $1', [id]);
+    return db.query('SELECT signature FROM signatures WHERE id = $1', [id]);
 };

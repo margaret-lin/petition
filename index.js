@@ -44,20 +44,21 @@ app.post('/petition', (req, res) => {
 });
 
 app.get('/signed', (req, res) => {
-    db.getSig(req.session.sigId).then(result => {
-        console.log('im here', result);
-    });
+    db.getSig(req.session.sigId).then(({ rows }) => {
+        let imageSig = rows[0].signature;
 
-    db.selectSig()
-        .then(({ rows }) => {
-            res.render('signed', {
-                layout: 'main',
-                num: rows[0].count
+        db.selectSig()
+            .then(({ rows }) => {
+                res.render('signed', {
+                    layout: 'main',
+                    num: rows[0].count,
+                    image: imageSig
+                });
+            })
+            .catch(err => {
+                console.log('post error:', err);
             });
-        })
-        .catch(err => {
-            console.log('post error:', err);
-        });
+    });
 });
 
 app.get('/participants', (req, res) => {
