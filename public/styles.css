@@ -31,11 +31,32 @@ header {
 }
 
 main {
+    display: flex;
     width: 100%;
     flex: 1 0 auto;
     justify-content: center;
 }
 
+.main-box {
+    justify-content: center;
+    text-align: center;
+}
+
+#sign-here {
+    margin-top: 5px;
+    margin-bottom: 30px;
+    font-size: 15px;
+}
+
+#submit-button {
+    height: 50px;
+    width: 100px;
+    background-color: gold;
+    color: white;
+    font-size: 25px;
+    border: 2px dotted grey;
+    cursor: pointer;
+}
 canvas {
     border: 2px black solid;
 }
