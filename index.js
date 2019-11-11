@@ -21,6 +21,18 @@ app.use(function(req, res, next) {
 app.use(express.static('./public'));
 
 // routes
+app.get('/register', (req, res) => {
+    res.render('register', {
+        layout: 'main'
+    });
+});
+
+app.get('/login', (req, res) => {
+    res.render('login', {
+        layout: 'main'
+    });
+});
+
 app.get('/petition', (req, res) => {
     if (req.session.sigId) {
         res.redirect('/signed');
@@ -34,6 +46,7 @@ app.get('/petition', (req, res) => {
 app.post('/petition', (req, res) => {
     console.log('rec body', req.body);
 
+    //insert user_id
     db.userInfo(req.body.first, req.body.last, req.body.sig)
         .then(({ rows }) => {
             req.session.sigId = rows[0].id;

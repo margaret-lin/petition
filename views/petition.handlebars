@@ -1,4 +1,4 @@
-<div class="petition-main">
+<div class="main-content">
     <form method="POST">
         {{>petition-info}}
 
@@ -10,7 +10,7 @@
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <p id="sign-here">Sign Here</p>
 
-    <button id="submit-button">Submit</button>
+    <button id="submit-button" class="buttons">Submit</button>
     <p id="sig-error" class='hidden'>Don't forget to sign your signature :)</p>
     
     </form>

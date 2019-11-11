@@ -3,10 +3,10 @@ let isDrawing = false;
 let x = 0;
 let y = 0;
 
-let canvas = document.getElementById('canvas');
+var canvas = document.getElementById('canvas');
 
 if (canvas) {
-    let context = canvas.getContext('2d');
+    var context = canvas.getContext('2d');
 
     // The x and y offset of the canvas from the edge of the page
     const rect = canvas.getBoundingClientRect();
@@ -69,8 +69,8 @@ if (canvas) {
     });
 }
 
-// var canvas = $("#canvas");
-// var myContext = canvas[0].getContext("2d");
+// var canvas = $('#canvas');
+// var myContext = canvas[0].getContext('2d');
 // var dataURL = canvas[0].toDataURL();
 
 // $(document).on("mousedown", function(e) {
@@ -82,13 +82,13 @@ if (canvas) {
 //     myContext.moveTo(left, top);
 //     console.log("mousedown");
 
-//     $(document).on("mousemove", function(e) {
-//         var left = e.clientX - canvas.offset().left;
-//         var top = e.clientY - canvas.offset().top;
-//         myContext.lineTo(left, top);
-//         myContext.stroke();
-//         console.log("mousemove");
-//     });
+// $(document).on("mousemove", function(e) {
+//     var left = e.clientX - canvas.offset().left;
+//     var top = e.clientY - canvas.offset().top;
+//     myContext.lineTo(left, top);
+//     myContext.stroke();
+//     console.log("mousemove");
+// });
 // });
 
 // $(document).on("mouseup", function(e) {

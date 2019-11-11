@@ -48,7 +48,7 @@ main {
     font-size: 15px;
 }
 
-#submit-button {
+.buttons {
     height: 50px;
     width: 100px;
     background-color: gold;
@@ -61,7 +61,7 @@ canvas {
     border: 2px black solid;
 }
 
-.petition-main {
+.main-content {
     align-items: flex-start;
     justify-content: center;
 }
