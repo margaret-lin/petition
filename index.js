@@ -14,11 +14,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
     cookieSession({ secret: `my secret`, maxAge: 1000 * 60 * 60 * 24 * 14 })
 );
-// app.use(csurf());
-// app.use(function(req, res, next) {
-//     res.locals.csrfToken = req.csrfToken();
-//     next();
-// });
+app.use(csurf());
+app.use(function(req, res, next) {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
 app.use(express.static('./public'));
 
 // routes
@@ -95,8 +95,7 @@ app.get('/petition', (req, res) => {
 app.post('/petition', (req, res) => {
     console.log('rec body', req.body);
 
-    //insert user_id
-    db.userInfo(req.body.sig)
+    db.userInfo(req.body.sig, req.session.userId)
         .then(({ rows }) => {
             req.session.sigId = rows[0].id;
             console.log('my cookie session', req.session.sigId);

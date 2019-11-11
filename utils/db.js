@@ -1,10 +1,10 @@
 var spicedPg = require('spiced-pg');
 var db = spicedPg('postgres:postgres:postgres@localhost:5432/petition');
 
-exports.userInfo = function userInfo(sig) {
+exports.userInfo = function userInfo(sig, user_id) {
     return db.query(
-        'INSERT INTO signatures (signature) VALUES ($1) RETURNING id',
-        [sig]
+        'INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING id',
+        [sig, user_id]
     );
 };
 
