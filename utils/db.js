@@ -16,7 +16,9 @@ exports.getUserInput = function getUserInput(first, last, email, pwd) {
 };
 
 exports.getSigners = function getSigners() {
-    return db.query('SELECT first, last FROM signatures');
+    return db.query(
+        'SELECT users.id, first, last FROM users INNER JOIN signatures ON (users.id = signatures.user_id)'
+    );
 };
 
 exports.selectSig = function selectSig() {
