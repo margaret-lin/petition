@@ -11,7 +11,8 @@ body {
     display: none;
 }
 
-#sig-error {
+#sig-error,
+#error-msg {
     color: red;
 }
 

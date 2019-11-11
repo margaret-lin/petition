@@ -2,7 +2,9 @@
     <form method="POST">
         <h3>Please log in :)</h3>
         <input type="text" placeholder="Email address" name="email" required><br><br>
-        <input type="text" placeholder="Password" name="pwd" required><br><br>
+        <input type="password" placeholder="Password" name="pwd" required><br><br>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
 
     <button id="login-button" class="buttons">Login</button>
     </form>

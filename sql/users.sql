@@ -1,4 +1,4 @@
-CREATE TABLE signatures (
+CREATE TABLE users (
     id SERIAL primary key,
     first VARCHAR(255) NOT NULL,
     last VARCHAR(255) NOT NULL,

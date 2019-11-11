@@ -4,8 +4,12 @@
         <input type="text" placeholder="First Name" name="first" required><br><br>
         <input type="text" placeholder="Last Name" name="last" required><br><br>
         <input type="text" placeholder="Email address" name="email" required><br><br>
-        <input type="text" placeholder="Password" name="pwd" required><br><br>
+        <input type="password" placeholder="Password" name="pwd" required><br><br>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
     <button id="signup-button" class="buttons">Sign up</button>
+    {{#if error}}
+    <p id="register-wrong" class="error-msg">Wooooops something went wrong!</p>
+    {{/if}}
     </form>
 </div>
