@@ -95,6 +95,11 @@ app.post('/login', (req, res) => {
                     .catch(err => {
                         console.log('hashpost', err);
                     });
+            } else {
+                res.render('login', {
+                    layout: 'main',
+                    error: true
+                });
             }
         });
     });

@@ -12,7 +12,7 @@ body {
 }
 
 #sig-error,
-#error-msg {
+.error-msg {
     color: red;
 }
 

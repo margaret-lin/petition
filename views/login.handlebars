@@ -7,5 +7,8 @@
 
 
     <button id="login-button" class="buttons">Login</button>
+    {{#if error}}
+    <p id="login-wrong" class="error-msg">Woops... email or/and password not correct!</p>
+    {{/if}}
     </form>
 </div>
