@@ -16,6 +16,18 @@ body {
     color: red;
 }
 
+#redirect-login {
+    color: rebeccapurple;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+#click-here {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 18px;
+}
+
 body {
     display: flex;
     flex-direction: column;

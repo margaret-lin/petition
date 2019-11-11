@@ -101,6 +101,9 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/petition', (req, res) => {
+    if (!req.session.userId) {
+        res.redirect('/register');
+    }
     if (req.session.sigId) {
         res.redirect('/signed');
     } else {
