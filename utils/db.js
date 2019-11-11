@@ -34,7 +34,5 @@ exports.getPwd = function getPwd(email) {
 };
 
 exports.hasSigned = function hasSigned(userId) {
-    return db.query('SELECT user_id FROM signatures WHERE user_id = $1', [
-        userId
-    ]);
+    return db.query('SELECT id FROM signatures WHERE user_id = $1', [userId]);
 };

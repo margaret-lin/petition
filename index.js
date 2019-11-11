@@ -67,21 +67,28 @@ app.post('/login', (req, res) => {
     let email = req.body.email;
     let inputPwd = req.body.pwd;
 
+    // fetch pwd from db
     db.getPwd(email).then(({ rows }) => {
         let hashedPwd = rows[0].password;
 
+        // compare pwd from input and db
         compare(inputPwd, hashedPwd).then(match => {
             if (match) {
-                req.session.userId = rows[0].id;
+                // user entered correct pwd
+                // store the user's id in session
+                let userId = rows[0].id;
+                req.session.userId = userId;
+
                 // check if the user has signed
-                db.hasSigned(rows[0].id)
+                db.hasSigned(userId)
                     .then(({ rows }) => {
                         // if not signed (length = 0) = no result
                         if (rows.length === 0) {
                             res.redirect('/petition');
-                            console.log('redirect to petition');
                         } else {
-                            console.log('redirect to signed');
+                            // if user signed already, save signature's id in session
+                            let signatureId = rows[0].id;
+                            req.session.sigId = signatureId;
                             res.redirect('/signed');
                         }
                     })
