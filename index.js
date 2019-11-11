@@ -29,11 +29,6 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-    // console.log('first', req.body.first);
-    // console.log('last', req.body.last);
-    // console.log('email', req.body.email);
-    // console.log('pwd', req.body.pwd);
-
     hash(req.body.pwd)
         .then(hashPwd => {
             db.getUserInput(
@@ -70,13 +65,29 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
     let email = req.body.email;
-    let password = req.body.pwd;
+    let inputPwd = req.body.pwd;
 
     db.getPwd(email).then(({ rows }) => {
         let hashedPwd = rows[0].password;
-        compare(password, hashedPwd).then(match => {
-            if (match === true) {
+
+        compare(inputPwd, hashedPwd).then(match => {
+            if (match) {
                 req.session.userId = rows[0].id;
+                // check if the user has signed
+                db.hasSigned(rows[0].id)
+                    .then(({ rows }) => {
+                        // if not signed (length = 0) = no result
+                        if (rows.length === 0) {
+                            res.redirect('/petition');
+                            console.log('redirect to petition');
+                        } else {
+                            console.log('redirect to signed');
+                            res.redirect('/signed');
+                        }
+                    })
+                    .catch(err => {
+                        console.log('hashpost', err);
+                    });
             }
         });
     });

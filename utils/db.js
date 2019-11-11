@@ -28,7 +28,11 @@ exports.getSig = function getSig(id) {
 };
 
 exports.getPwd = function getPwd(email) {
-    return db.query('SELECT password, id FROM signatures WHERE email = $1', [
-        email
+    return db.query('SELECT password, id FROM users WHERE email = $1', [email]);
+};
+
+exports.hasSigned = function hasSigned(userId) {
+    return db.query('SELECT user_id FROM signatures WHERE user_id = $1', [
+        userId
     ]);
 };
