@@ -64,6 +64,7 @@ app.get('/profile', (req, res) => {
 
 app.post('/profile', (req, res) => {
     console.log('reqbody', req.body);
+
     db.getExtraInfo(
         req.body.age,
         req.body.city,
@@ -71,21 +72,22 @@ app.post('/profile', (req, res) => {
         req.session.userId
     )
         .then(({ rows }) => {
-            let userWeb = rows[0].web;
+            // let userWeb = rows[0].web;
+            // console.log('webaddress', userWeb);
 
-            req.session.userId = rows[0].id;
+            // req.session.userId = rows[0].id;
 
-            if (
-                !userWeb.startsWith('https://') ||
-                !userWeb.startsWith('https://')
-            ) {
-                res.render('profile', {
-                    layout: 'main',
-                    error: true
-                });
-            } else {
-                res.redirect('/petition');
-            }
+            // if (
+            //     !userWeb.startsWith('https://') ||
+            //     !userWeb.startsWith('https://')
+            // ) {
+            //     res.render('profile', {
+            //         layout: 'main',
+            //         error: true
+            //     });
+            // } else {
+            res.redirect('/petition');
+            // }
         })
         .catch(err => {
             console.log(err);

@@ -1,6 +1,12 @@
 var spicedPg = require('spiced-pg');
 var db = spicedPg('postgres:postgres:postgres@localhost:5432/petition');
 
+exports.getUserInput = function getUserInput(first, last, email, pwd) {
+    return db.query(
+        'INSERT INTO users (first, last, email, password) VALUES ($1, $2, $3, $4) RETURNING id',
+        [first, last, email, pwd]
+    );
+};
 exports.userInfo = function userInfo(sig, user_id) {
     return db.query(
         'INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING id',
@@ -8,16 +14,10 @@ exports.userInfo = function userInfo(sig, user_id) {
     );
 };
 
-exports.getUserInput = function getUserInput(first, last, email, pwd) {
+exports.getExtraInfo = function getExtraInfo(age, city, web, user_id) {
     return db.query(
-        'INSERT INTO users (first, last, email, password) VALUES ($1, $2, $3, $4) RETURNING id',
-        [first, last, email, pwd]
-    );
-};
-exports.getExtraInfo = function getExtraInfo(age, city, web) {
-    return db.query(
-        'INSERT INTO user_profiles (age, city, url) VALUES ($1, $2, $3) RETURNING id',
-        [age, city, web]
+        'INSERT INTO user_profiles (age, city, url, user_id) VALUES ($1, $2, $3, $4) RETURNING id',
+        [age, city, web, user_id]
     );
 };
 
