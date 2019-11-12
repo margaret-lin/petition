@@ -1,0 +1,14 @@
+<div class="main-content">
+    <form method="POST">
+        <h3>Cool!! Now why don't you tell us more about yourself :)?</h3>
+        <input type="text" placeholder="Age" name="age" required><br><br>
+        <input type="text" placeholder="City" name="city" required><br><br>
+        <input type="text" placeholder="Home Page" name="web" required><br><br>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+    <button id="next-button" class="buttons">Next</button>
+    {{#if error}}
+    <p id="profile-wrong" class="error-msg">Wooooops something went wrong!</p>
+    {{/if}}
+    </form>
+</div>

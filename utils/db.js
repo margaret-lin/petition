@@ -14,6 +14,12 @@ exports.getUserInput = function getUserInput(first, last, email, pwd) {
         [first, last, email, pwd]
     );
 };
+exports.getExtraInfo = function getExtraInfo(age, city, web) {
+    return db.query(
+        'INSERT INTO user_profiles (age, city, url) VALUES ($1, $2, $3) RETURNING id',
+        [age, city, web]
+    );
+};
 
 exports.getSigners = function getSigners() {
     return db.query(

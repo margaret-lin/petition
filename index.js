@@ -39,9 +39,8 @@ app.post('/register', (req, res) => {
             )
                 .then(({ rows }) => {
                     console.log('reqbody', req.body);
-                    // console.log('hashpwd', hashPwd);
                     req.session.userId = rows[0].id;
-                    res.redirect('/signed');
+                    res.redirect('/profile');
                     console.log('userid', req.session.userId);
                 })
                 .catch(err => {
@@ -51,6 +50,42 @@ app.post('/register', (req, res) => {
                         error: true
                     });
                 });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
+app.get('/profile', (req, res) => {
+    res.render('profile', {
+        layout: 'main'
+    });
+});
+
+app.post('/profile', (req, res) => {
+    console.log('reqbody', req.body);
+    db.getExtraInfo(
+        req.body.age,
+        req.body.city,
+        req.body.web,
+        req.session.userId
+    )
+        .then(({ rows }) => {
+            let userWeb = rows[0].web;
+
+            req.session.userId = rows[0].id;
+
+            if (
+                !userWeb.startsWith('https://') ||
+                !userWeb.startsWith('https://')
+            ) {
+                res.render('profile', {
+                    layout: 'main',
+                    error: true
+                });
+            } else {
+                res.redirect('/petition');
+            }
         })
         .catch(err => {
             console.log(err);
