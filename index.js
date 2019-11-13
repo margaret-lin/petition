@@ -72,28 +72,42 @@ app.post('/profile', (req, res) => {
         req.session.userId
     )
         .then(({ rows }) => {
-            // req.session.profiId = rows[0].id;
-            let userId = req.session.userId;
-            console.log('req.session.userId is', userId);
+            // console.log('rows', rows);
+            // console.log('req.session is', req.session);
+            // console.log('length', rows[0].url.length);
 
-            db.getUrl(userId).then(({ rows }) => {
-                let userWeb = rows[0].url;
-                console.log('webaddress', userWeb);
+            let webUrl = rows[0].url;
 
-                // if (userWeb.length > 0) {}
-                if (
-                    !userWeb.startsWith('http://') ||
-                    !userWeb.startsWith('https://')
-                ) {
-                    console.log('input not https/http');
-                    res.render('profile', {
-                        layout: 'main',
-                        error: true
-                    });
-                } else {
-                    res.redirect('/petition');
-                }
-            });
+            if (
+                webUrl.startsWith('http://') ||
+                webUrl.startsWith('https://') ||
+                webUrl.length === 0
+            ) {
+                console.log('it works!');
+
+                res.redirect('/petition');
+            } else {
+                console.log('input not https/http');
+                res.render('profile', {
+                    layout: 'main',
+                    error: true
+                });
+            }
+
+            // another approach...
+            // if (
+            //     !rows[0].url.startsWith('http://') &&
+            //     !rows[0].url.startsWith('https://')
+            // ) {
+            //     console.log('input not https/http');
+            //     res.render('profile', {
+            //         layout: 'main',
+            //         error: true
+            //     });
+            // } else {
+            //     console.log('it works!');
+            //     res.redirect('/petition');
+            // }
         })
         .catch(err => {
             console.log(err);
@@ -201,7 +215,7 @@ app.get('/signed', (req, res) => {
     });
 });
 
-app.get('/signers', (req, res) => {
+app.get('/signers/:city', (req, res) => {
     if (!req.session.sigId) {
         res.redirect('/petition');
         return;

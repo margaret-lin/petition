@@ -19,18 +19,18 @@ exports.userInfo = function userInfo(sig, userId) {
 
 exports.getExtraInfo = function getExtraInfo(age, city, web, userId) {
     return db.query(
-        'INSERT INTO user_profiles (age, city, url, user_id) VALUES ($1, $2, $3, $4) RETURNING id',
+        'INSERT INTO user_profiles (age, city, url, user_id) VALUES ($1, $2, $3, $4) RETURNING *',
         [age, city, web, userId]
     );
 };
 
-exports.getUrl = function getUrl(userId) {
-    return db.query('SELECT url FROM user_profiles WHERE user_id = $1', [
-        userId
-    ]);
+exports.getSigners = function getSigners() {
+    return db.query(
+        'SELECT users.id, first, last FROM users INNER JOIN signatures ON (users.id = signatures.user_id)'
+    );
 };
 
-exports.getSigners = function getSigners() {
+exports.getSignersByCity = function getSignersByCity() {
     return db.query(
         'SELECT users.id, first, last FROM users INNER JOIN signatures ON (users.id = signatures.user_id)'
     );
