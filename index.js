@@ -72,27 +72,28 @@ app.post('/profile', (req, res) => {
         req.session.userId
     )
         .then(({ rows }) => {
+            // req.session.profiId = rows[0].id;
             let userId = req.session.userId;
+            console.log('req.session.userId is', userId);
+
             db.getUrl(userId).then(({ rows }) => {
                 let userWeb = rows[0].url;
                 console.log('webaddress', userWeb);
+
+                // if (userWeb.length > 0) {}
+                if (
+                    !userWeb.startsWith('http://') ||
+                    !userWeb.startsWith('https://')
+                ) {
+                    console.log('input not https/http');
+                    res.render('profile', {
+                        layout: 'main',
+                        error: true
+                    });
+                } else {
+                    res.redirect('/petition');
+                }
             });
-
-            // req.session.userId = rows[0].id;
-
-            // if (userWeb.length > 0) {
-            //     if (
-            //         !userWeb.startsWith('https://') ||
-            //         !userWeb.startsWith('https://')
-            //     ) {
-            // res.render('profile', {
-            //     layout: 'main',
-            //     error: true
-            // });
-            //     }
-            // } else {
-            res.redirect('/petition');
-            // }
         })
         .catch(err => {
             console.log(err);
@@ -215,4 +216,4 @@ app.get('/signers', (req, res) => {
     });
 });
 
-app.listen(8080, () => console.log('I am listening!!'));
+app.listen(process.env.PORT || 8080, () => console.log('I am listening!!'));
