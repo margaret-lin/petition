@@ -1,0 +1,16 @@
+<div class="main-content">
+    <form method="POST">
+        <h3>Don't panic, you can always edit your information here :)</h3>
+        {{#with input}}
+        <input type="text" placeholder="First Name" name="first" value="{{input.first}}"><br><br>
+        <input type="text" placeholder="Last Name" name="last" value="{{input.last}}"><br><br>
+        <input type="email" placeholder="Email address" name="email" value="{{input.email}}"><br><br>
+        <input type="number" placeholder="Age" name="age" value="{{input.age}}"><br><br>
+        <input type="text" placeholder="City" name="city" value="{{input.city}}"><br><br>
+        <input type="url" placeholder="Home Page" name="web" value="{{input.url}}"><br><br>
+        {{!-- <input type="password" placeholder="Password" name="pwd" value="{{input.first}}"><br><br> --}}
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        {{/with}}
+    <button id="continue-button" class="buttons">Continue</button>
+    </form>
+</div>

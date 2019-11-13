@@ -72,10 +72,6 @@ app.post('/profile', (req, res) => {
         req.session.userId
     )
         .then(({ rows }) => {
-            // console.log('rows', rows);
-            // console.log('req.session is', req.session);
-            // console.log('length', rows[0].url.length);
-
             let webUrl = rows[0].url;
 
             if (
@@ -93,21 +89,6 @@ app.post('/profile', (req, res) => {
                     error: true
                 });
             }
-
-            // another approach...
-            // if (
-            //     !rows[0].url.startsWith('http://') &&
-            //     !rows[0].url.startsWith('https://')
-            // ) {
-            //     console.log('input not https/http');
-            //     res.render('profile', {
-            //         layout: 'main',
-            //         error: true
-            //     });
-            // } else {
-            //     console.log('it works!');
-            //     res.redirect('/petition');
-            // }
         })
         .catch(err => {
             console.log(err);
@@ -192,6 +173,21 @@ app.post('/petition', (req, res) => {
             console.log('post error:', err);
         });
 });
+
+app.get('/edit', (req, res) => {
+    if (!req.session.userId) {
+        res.redirect('/register');
+    }
+    db.getProfile().then(({ rows }) => {
+        console.log(rows);
+        res.render('edit', {
+            layout: 'main',
+            input: rows
+        });
+    });
+});
+
+app.post('/edit', (req, res) => {});
 
 app.get('/signed', (req, res) => {
     if (!req.session.sigId) {
