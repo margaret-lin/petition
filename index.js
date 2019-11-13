@@ -198,10 +198,10 @@ app.get('/signed', (req, res) => {
         res.redirect('/petition');
         return;
     }
-    db.getSig(req.session.sigId).then(({ rows }) => {
+    db.getSignature(req.session.sigId).then(({ rows }) => {
         let imageSig = rows[0].signature;
 
-        db.selectSig()
+        db.selectSignature()
             .then(({ rows }) => {
                 res.render('signed', {
                     layout: 'main',
@@ -215,7 +215,7 @@ app.get('/signed', (req, res) => {
     });
 });
 
-app.get('/signers/:city', (req, res) => {
+app.get('/signers', (req, res) => {
     if (!req.session.sigId) {
         res.redirect('/petition');
         return;
@@ -226,6 +226,23 @@ app.get('/signers/:city', (req, res) => {
         res.render('signers', {
             layout: 'main',
             signers: rows
+        });
+    });
+});
+
+app.get('/signers/:city', (req, res) => {
+    let { city } = req.params;
+
+    if (!req.session.sigId) {
+        res.redirect('/petition');
+        return;
+    }
+
+    db.getSignersByCity(city).then(({ rows }) => {
+        res.render('signers', {
+            layout: 'main',
+            signers: rows,
+            cityOn: true
         });
     });
 });
