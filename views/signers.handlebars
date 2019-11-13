@@ -1,6 +1,6 @@
 <h1>The list of participants are...</h1>
 <ol>
 {{#each signers}}
-<li>{{this.first}} {{this.last}} {{this.age}} {{this.city}} {{this.url}}</li>
+<li>{{this.first}} {{this.last}} {{this.age}} <a href="/signers/{{this.city}}">{{this.city}}</a> <a href="{{this.url}}">{{this.url}}</a></li>
 {{/each}}
 </ol>

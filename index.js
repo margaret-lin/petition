@@ -241,8 +241,7 @@ app.get('/signers/:city', (req, res) => {
     db.getSignersByCity(city).then(({ rows }) => {
         res.render('signers', {
             layout: 'main',
-            signers: rows,
-            cityOn: true
+            signers: rows
         });
     });
 });
