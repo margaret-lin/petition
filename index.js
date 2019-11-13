@@ -66,7 +66,7 @@ app.post('/profile', (req, res) => {
     console.log('reqbody', req.body);
 
     db.getExtraInfo(
-        req.body.age,
+        req.body.age || null,
         req.body.city,
         req.body.web,
         req.session.userId
