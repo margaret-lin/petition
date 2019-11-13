@@ -7,18 +7,24 @@ exports.getUserInput = function getUserInput(first, last, email, pwd) {
         [first, last, email, pwd]
     );
 };
-exports.userInfo = function userInfo(sig, user_id) {
+exports.userInfo = function userInfo(sig, userId) {
     return db.query(
         'INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING id',
-        [sig, user_id]
+        [sig, userId]
     );
 };
 
-exports.getExtraInfo = function getExtraInfo(age, city, web, user_id) {
+exports.getExtraInfo = function getExtraInfo(age, city, web, userId) {
     return db.query(
         'INSERT INTO user_profiles (age, city, url, user_id) VALUES ($1, $2, $3, $4) RETURNING id',
-        [age, city, web, user_id]
+        [age, city, web, userId]
     );
+};
+
+exports.getUrl = function getUrl(userId) {
+    return db.query('SELECT url FROM user_profiles WHERE user_id = $1', [
+        userId
+    ]);
 };
 
 exports.getSigners = function getSigners() {

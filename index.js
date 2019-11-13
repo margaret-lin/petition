@@ -72,25 +72,34 @@ app.post('/profile', (req, res) => {
         req.session.userId
     )
         .then(({ rows }) => {
-            // let userWeb = rows[0].web;
-            // console.log('webaddress', userWeb);
+            let userId = req.session.userId;
+            db.getUrl(userId).then(({ rows }) => {
+                let userWeb = rows[0].url;
+                console.log('webaddress', userWeb);
+            });
 
             // req.session.userId = rows[0].id;
 
-            // if (
-            //     !userWeb.startsWith('https://') ||
-            //     !userWeb.startsWith('https://')
-            // ) {
-            //     res.render('profile', {
-            //         layout: 'main',
-            //         error: true
-            //     });
+            // if (userWeb.length > 0) {
+            //     if (
+            //         !userWeb.startsWith('https://') ||
+            //         !userWeb.startsWith('https://')
+            //     ) {
+            // res.render('profile', {
+            //     layout: 'main',
+            //     error: true
+            // });
+            //     }
             // } else {
             res.redirect('/petition');
             // }
         })
         .catch(err => {
             console.log(err);
+            res.render('profile', {
+                layout: 'main',
+                error: true
+            });
         });
 });
 
