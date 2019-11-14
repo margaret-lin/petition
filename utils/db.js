@@ -30,6 +30,18 @@ exports.getProfile = function getProfile() {
     );
 };
 
+exports.getProfileInput = function getProfileInput() {
+    return db.query(
+        'UPDATE users SET first, last, email WHERE first, last, email'
+    );
+};
+
+exports.getProfileInputOptional = function getProfileInputOptional() {
+    return db.query(
+        'UPDATE users SET first, last, email WHERE first, last, email'
+    );
+};
+
 exports.getSigners = function getSigners() {
     return db.query(
         'SELECT users.id, first, last, user_profiles.age, user_profiles.city, user_profiles.url FROM users FULL OUTER JOIN user_profiles ON (users.id = user_profiles.user_id) INNER JOIN signatures ON (user_profiles.user_id = signatures.user_id)'
