@@ -30,10 +30,10 @@ exports.getProfile = function getProfile() {
     );
 };
 
-exports.getProfileInput = function getProfileInput(first, last, email) {
-    return db.query(
-        'UPDATE users SET first, last, email WHERE first, last, email'
-    );
+exports.getProfileInput = function getProfileInput(first, last, email, userId) {
+    return db.query('UPDATE users SET first, last, email WHERE id = $1', [
+        userId
+    ]);
 };
 
 exports.getProfileInputOptional = function getProfileInputOptional(
@@ -43,7 +43,7 @@ exports.getProfileInputOptional = function getProfileInputOptional(
     userId
 ) {
     return db.query(
-        'INSERT INTO user_profiles(age, city, url, user_id) VALUES ($1, $2, $3, $4) ON CONFLICT () DO UPDATE SET age = $1, city = $2, url = $3',
+        'INSERT INTO user_profiles(age, city, url, user_id) VALUES ($1, $2, $3, $4) ON CONFLICT (user_id) DO UPDATE SET age = $1, city = $2, url = $3',
         [age, city, web, userId]
     );
 };

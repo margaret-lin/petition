@@ -262,7 +262,12 @@ app.post('/profile/edit', (req, res) => {
             console.log('edit error', err);
         });
 
-    db.getProfileInputOptional()
+    db.getProfileInputOptional(
+        req.body.age || null,
+        req.body.city,
+        req.body.web,
+        req.session.userId
+    )
         .then(({ rows }) => {
             console.log('getProfileInputOptional is :', rows[rows.length - 1]);
             res.render('edit', {
