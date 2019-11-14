@@ -22,6 +22,10 @@ app.use(function(req, res, next) {
 app.use(express.static('./public'));
 
 // routes
+app.get('/', (req, res) => {
+    res.redirect('/register');
+});
+
 app.get('/register', (req, res) => {
     res.render('register', {
         layout: 'main'
@@ -53,49 +57,6 @@ app.post('/register', (req, res) => {
         })
         .catch(err => {
             console.log(err);
-        });
-});
-
-app.get('/profile', (req, res) => {
-    res.render('profile', {
-        layout: 'main'
-    });
-});
-
-app.post('/profile', (req, res) => {
-    console.log('reqbody', req.body);
-
-    db.getExtraInfo(
-        req.body.age || null,
-        req.body.city,
-        req.body.web,
-        req.session.userId
-    )
-        .then(({ rows }) => {
-            let webUrl = rows[0].url;
-
-            if (
-                webUrl.startsWith('http://') ||
-                webUrl.startsWith('https://') ||
-                webUrl.length === 0
-            ) {
-                console.log('it works!');
-
-                res.redirect('/petition');
-            } else {
-                console.log('input not https/http');
-                res.render('profile', {
-                    layout: 'main',
-                    error: true
-                });
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.render('profile', {
-                layout: 'main',
-                error: true
-            });
         });
 });
 
@@ -174,21 +135,6 @@ app.post('/petition', (req, res) => {
         });
 });
 
-app.get('/edit', (req, res) => {
-    if (!req.session.userId) {
-        res.redirect('/register');
-    }
-    db.getProfile().then(({ rows }) => {
-        console.log(rows);
-        res.render('edit', {
-            layout: 'main',
-            input: rows
-        });
-    });
-});
-
-app.post('/edit', (req, res) => {});
-
 app.get('/signed', (req, res) => {
     if (!req.session.sigId) {
         res.redirect('/petition');
@@ -241,5 +187,63 @@ app.get('/signers/:city', (req, res) => {
         });
     });
 });
+
+app.get('/profile', (req, res) => {
+    res.render('profile', {
+        layout: 'main'
+    });
+});
+
+app.post('/profile', (req, res) => {
+    console.log('reqbody', req.body);
+
+    db.getExtraInfo(
+        req.body.age || null,
+        req.body.city,
+        req.body.web,
+        req.session.userId
+    )
+        .then(({ rows }) => {
+            let webUrl = rows[0].url;
+
+            if (
+                webUrl.startsWith('http://') ||
+                webUrl.startsWith('https://') ||
+                webUrl.length === 0
+            ) {
+                console.log('it works!');
+
+                res.redirect('/petition');
+            } else {
+                console.log('input not https/http');
+                res.render('profile', {
+                    layout: 'main',
+                    error: true
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.render('profile', {
+                layout: 'main',
+                error: true
+            });
+        });
+});
+
+app.get('/profile/edit', (req, res) => {
+    if (!req.session.userId) {
+        res.redirect('/register');
+    }
+    db.getProfile().then(({ rows }) => {
+        console.log(rows);
+        res.render('edit', {
+            layout: 'main',
+            input: rows
+        });
+    });
+});
+
+app.post('/profile/edit', (req, res) => {});
 
 app.listen(process.env.PORT || 8080, () => console.log('I am listening!!'));
