@@ -239,7 +239,7 @@ app.get('/profile/edit', (req, res) => {
         console.log(rows);
         res.render('edit', {
             layout: 'main',
-            input: rows
+            input: rows[rows.length - 1]
         });
     });
 });
