@@ -249,38 +249,36 @@ app.post('/profile/edit', (req, res) => {
         res.redirect('/register');
     }
 
-    db.updateProfile()
-        .then(({ rows }) => {
-            console.log('updateProfile is :', rows[rows.length - 1]);
+    Promise.all([
+        db
+            .updateProfile(
+                req.body.first,
+                req.body.last,
+                req.body.email,
+                req.session.userId
+            )
+            .catch(err => console.log('updateProfile error', err)),
+        db
+            .updateProfileOptional(
+                req.body.age || null,
+                req.body.city,
+                req.body.web,
+                req.session.userId
+            )
+            .catch(err => console.log('updateProfileOptional', err))
+    ]).then(() => {
+        res.redirect('/petition');
 
-            res.render('edit', {
-                layout: 'main',
-                input: rows[rows.length - 1]
-            });
-        })
-        .catch(err => {
-            console.log('updateProfile error', err);
-        });
-
-    db.updateProfileOptional(
-        req.body.age || null,
-        req.body.city,
-        req.body.web,
-        req.session.userId
-    )
-        .then(({ rows }) => {
-            console.log('updateProfileOptional is :', rows[rows.length - 1]);
-            res.render('edit', {
-                layout: 'main',
-                input: rows[rows.length - 1]
-            });
-        })
-        .catch(err => {
-            console.log('updateProfileOptional', err);
-        });
-
-    res.redirect('/profile/edit');
-
+        // db.getProfile().then(({ rows }) => {
+        //     res.render('edit', {
+        //         layout: 'main',
+        //         input: rows[rows.length - 1],
+        //         // updated: true
+        //     });
+        // });
+    });
+    res.redirect('/petition');
+    // res.redirect('/profile/edit')
     // res.redirect('/petition');
 });
 

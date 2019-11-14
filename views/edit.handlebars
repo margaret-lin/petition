@@ -12,7 +12,8 @@
         {{/with}}
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <button id="continue-button" class="buttons">Continue</button>
-
-
     </form>
+    {{#if updated}}
+    <p class="success-msg">Your profile has been updated!!!</p>
+    {{/if}}
 </div>

@@ -16,6 +16,10 @@ body {
     color: red;
 }
 
+.success-msg {
+    color: cadetblue;
+}
+
 #redirect-login {
     color: rebeccapurple;
     margin-top: 20px;
