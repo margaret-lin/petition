@@ -249,9 +249,9 @@ app.post('/profile/edit', (req, res) => {
         res.redirect('/register');
     }
 
-    db.getProfileInput()
+    db.updateProfile()
         .then(({ rows }) => {
-            console.log('getProfileInput is :', rows[rows.length - 1]);
+            console.log('updateProfile is :', rows[rows.length - 1]);
 
             res.render('edit', {
                 layout: 'main',
@@ -259,24 +259,24 @@ app.post('/profile/edit', (req, res) => {
             });
         })
         .catch(err => {
-            console.log('edit error', err);
+            console.log('updateProfile error', err);
         });
 
-    db.getProfileInputOptional(
+    db.updateProfileOptional(
         req.body.age || null,
         req.body.city,
         req.body.web,
         req.session.userId
     )
         .then(({ rows }) => {
-            console.log('getProfileInputOptional is :', rows[rows.length - 1]);
+            console.log('updateProfileOptional is :', rows[rows.length - 1]);
             res.render('edit', {
                 layout: 'main',
                 input: rows[rows.length - 1]
             });
         })
         .catch(err => {
-            console.log('edit error', err);
+            console.log('updateProfileOptional', err);
         });
 
     res.redirect('/profile/edit');

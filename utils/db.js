@@ -30,13 +30,14 @@ exports.getProfile = function getProfile() {
     );
 };
 
-exports.getProfileInput = function getProfileInput(first, last, email, userId) {
-    return db.query('UPDATE users SET first, last, email WHERE id = $1', [
-        userId
-    ]);
+exports.updateProfile = function updateProfile(first, last, email, userId) {
+    return db.query(
+        'UPDATE users SET first = $1, last = $2, email = $3 WHERE id = $4',
+        [first, last, email, userId]
+    );
 };
 
-exports.getProfileInputOptional = function getProfileInputOptional(
+exports.updateProfileOptional = function updateProfileOptional(
     age,
     city,
     web,
