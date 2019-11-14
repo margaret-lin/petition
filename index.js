@@ -122,7 +122,7 @@ app.get('/petition', (req, res) => {
 });
 
 app.post('/petition', (req, res) => {
-    console.log('rec body', req.body);
+    // console.log('rec body', req.body);
 
     db.userInfo(req.body.sig, req.session.userId)
         .then(({ rows }) => {
@@ -164,7 +164,7 @@ app.get('/signers', (req, res) => {
     }
 
     db.getSigners().then(({ rows }) => {
-        console.log('signer rows', rows);
+        // console.log('signer rows', rows);
         res.render('signers', {
             layout: 'main',
             signers: rows
@@ -195,7 +195,7 @@ app.get('/profile', (req, res) => {
 });
 
 app.post('/profile', (req, res) => {
-    console.log('reqbody', req.body);
+    // console.log('reqbody', req.body);
 
     db.getExtraInfo(
         req.body.age || null,
@@ -213,7 +213,7 @@ app.post('/profile', (req, res) => {
             ) {
                 console.log('it works!');
 
-                res.redirect('/petition');
+                res.redirect('/login');
             } else {
                 console.log('input not https/http');
                 res.render('profile', {
@@ -236,7 +236,7 @@ app.get('/profile/edit', (req, res) => {
         res.redirect('/register');
     }
     db.getProfile().then(({ rows }) => {
-        console.log(rows);
+        // console.log(rows);
         res.render('edit', {
             layout: 'main',
             input: rows[rows.length - 1]
@@ -244,6 +244,39 @@ app.get('/profile/edit', (req, res) => {
     });
 });
 
-app.post('/profile/edit', (req, res) => {});
+app.post('/profile/edit', (req, res) => {
+    if (!req.session.userId) {
+        res.redirect('/register');
+    }
+
+    db.getProfileInput()
+        .then(({ rows }) => {
+            console.log('getProfileInput is :', rows[rows.length - 1]);
+
+            res.render('edit', {
+                layout: 'main',
+                input: rows[rows.length - 1]
+            });
+        })
+        .catch(err => {
+            console.log('edit error', err);
+        });
+
+    db.getProfileInputOptional()
+        .then(({ rows }) => {
+            console.log('getProfileInputOptional is :', rows[rows.length - 1]);
+            res.render('edit', {
+                layout: 'main',
+                input: rows[rows.length - 1]
+            });
+        })
+        .catch(err => {
+            console.log('edit error', err);
+        });
+
+    res.redirect('/profile/edit');
+
+    // res.redirect('/petition');
+});
 
 app.listen(process.env.PORT || 8080, () => console.log('I am listening!!'));
