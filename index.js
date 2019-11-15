@@ -157,6 +157,13 @@ app.get('/signed', (req, res) => {
     });
 });
 
+app.post('/signed', (req, res) => {
+    db.deleteSignature(req.session.sigId).then(() => {
+        req.session.sigId = null;
+        res.redirect('/petition');
+    });
+});
+
 app.get('/signers', (req, res) => {
     if (!req.session.sigId) {
         res.redirect('/petition');

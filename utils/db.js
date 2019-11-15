@@ -83,6 +83,10 @@ exports.getSignature = function getSignature(id) {
     return db.query('SELECT signature FROM signatures WHERE id = $1', [id]);
 };
 
+exports.deleteSignature = function deleteSignature(id) {
+    return db.query('DELETE FROM signatures WHERE id = $1', [id]);
+};
+
 exports.getPwd = function getPwd(email) {
     return db.query('SELECT password, id FROM users WHERE email = $1', [email]);
 };

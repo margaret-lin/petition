@@ -1,17 +1,11 @@
 <div class="main-content">
     <form method="POST">
         {{>petition-info}}
-
-    {{!-- <input type="text" class="first-name" placeholder="First Name" name="first" required>
-    <input type="text" class="last-name" placeholder="Last Name" name="last" required><br><br> --}}
-
-    <canvas id="canvas" width="350" height="100"></canvas><br>
-    <input type="hidden" id="signature" name="sig"> 
-    <input type="hidden" name="_csrf" value="{{csrfToken}}">
-    <p id="sign-here">Sign Here</p>
-
-    <button id="submit-button" class="buttons">Submit</button>
-    <p id="sig-error" class='hidden'>Don't forget to sign your signature :)</p>
-    
+        <canvas id="canvas" width="350" height="100"></canvas><br>
+        <input type="hidden" id="signature" name="sig"> 
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <p id="sign-here">Sign Here</p>
+        <button id="submit-button" class="buttons">Submit</button>
+        <p id="sig-error" class='hidden'>Don't forget to sign your signature :)</p>    
     </form>
 </div>
