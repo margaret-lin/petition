@@ -171,7 +171,6 @@ app.get('/signers', (req, res) => {
     }
 
     db.getSigners().then(({ rows }) => {
-        // console.log('signer rows', rows);
         res.render('signers', {
             layout: 'main',
             signers: rows

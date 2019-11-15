@@ -12,7 +12,7 @@ exports.getUserInput = function getUserInput(first, last, email, pwd) {
 };
 exports.userInfo = function userInfo(sig, userId) {
     return db.query(
-        'INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING id',
+        'INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING *',
         [sig, userId]
     );
 };
@@ -70,7 +70,7 @@ exports.getSigners = function getSigners() {
 
 exports.getSignersByCity = function getSignersByCity(city) {
     return db.query(
-        'SELECT * FROM user_profiles WHERE LOWER(city) = LOWER($1)',
+        'SELECT * FROM users FULL OUTER JOIN user_profiles ON users.id = user_profiles.user_id WHERE LOWER(city) = LOWER($1)',
         [city]
     );
 };
