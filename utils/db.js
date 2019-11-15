@@ -37,6 +37,19 @@ exports.updateProfile = function updateProfile(first, last, email, userId) {
     );
 };
 
+exports.updateProfilePassword = function updateProfilePassword(
+    first,
+    last,
+    email,
+    pwd,
+    userId
+) {
+    return db.query(
+        'UPDATE users SET first = $1, last = $2, email = $3, password = $4 WHERE id = $5',
+        [first, last, email, pwd, userId]
+    );
+};
+
 exports.updateProfileOptional = function updateProfileOptional(
     age,
     city,

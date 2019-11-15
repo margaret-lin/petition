@@ -249,37 +249,65 @@ app.post('/profile/edit', (req, res) => {
         res.redirect('/register');
     }
 
-    Promise.all([
-        db
-            .updateProfile(
-                req.body.first,
-                req.body.last,
-                req.body.email,
-                req.session.userId
-            )
-            .catch(err => console.log('updateProfile error', err)),
-        db
-            .updateProfileOptional(
-                req.body.age || null,
-                req.body.city,
-                req.body.web,
-                req.session.userId
-            )
-            .catch(err => console.log('updateProfileOptional', err))
-    ]).then(() => {
-        res.redirect('/petition');
+    if (req.body.pwd === '') {
+        Promise.all([
+            db
+                .updateProfile(
+                    req.body.first,
+                    req.body.last,
+                    req.body.email,
+                    req.session.userId
+                )
+                .catch(err => console.log('updateProfile error', err)),
+            db
+                .updateProfileOptional(
+                    req.body.age || null,
+                    req.body.city,
+                    req.body.web,
+                    req.session.userId
+                )
+                .catch(err => console.log('updateProfileOptional', err))
+        ])
+            .then(() => {
+                res.redirect('/petition');
+            })
+            .catch(err => console.log('updateProfileOptional', err));
+    } else {
+        hash(req.body.pwd).then(hashPwd =>
+            Promise.all([
+                db.updateProfilePassword(
+                    req.body.first,
+                    req.body.last,
+                    req.body.email,
+                    hashPwd,
+                    req.session.userId
+                ),
+                db
+                    .updateProfileOptional(
+                        req.body.age || null,
+                        req.body.city,
+                        req.body.web,
+                        req.session.userId
+                    )
+                    .catch(err => console.log('updateProfileOptional', err))
+            ])
+                .then(() => {
+                    res.redirect('/petition');
+                })
+                .catch(err => console.log('updateProfileOptional', err))
+        );
+    }
 
-        // db.getProfile().then(({ rows }) => {
-        //     res.render('edit', {
-        //         layout: 'main',
-        //         input: rows[rows.length - 1],
-        //         // updated: true
-        //     });
-        // });
-    });
-    res.redirect('/petition');
-    // res.redirect('/profile/edit')
     // res.redirect('/petition');
+
+    // db.getProfile().then(({ rows }) => {
+    //     res.render('edit', {
+    //         layout: 'main',
+    //         input: rows[rows.length - 1],
+    //         updated: true
+    //     });
+    // });
+    // res.redirect('/profile/edit')l
 });
 
 app.listen(process.env.PORT || 8080, () => console.log('I am listening!!'));
