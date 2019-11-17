@@ -88,6 +88,8 @@ h3 {
 #petition-box {
     justify-content: center;
     align-items: center;
+    margin-left: 10px;
+    width: 300px;
 }
 
 #petition-message {
