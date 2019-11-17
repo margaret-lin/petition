@@ -2,7 +2,11 @@
 <h2>The list of participants are...</h2>
 <ol id="signer-names">
 {{#signers}}
-<li>{{first}} {{last}}, {{age}}, <a href="/signers/{{city}}">{{city}}</a>, <a href="{{url}}">{{url}}</a></li>
+<li>{{first}} {{last}}
+    {{#if age}}, {{age}}{{/if}}
+    {{#if city}}, <a href="/signers/{{city}}">{{city}}</a>{{/if}}
+    {{#if url}}, <a href="{{url}}">{{url}}</a>{{/if}}
+</li>
 {{/signers}}
 </ol>
 </div>

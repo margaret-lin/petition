@@ -126,7 +126,7 @@ h3 {
     flex-grow: 1;
 }
 
-#petition-message > h3 {
+#petition-message > p {
     color: honeydew;
     font-size: 35px;
     text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
