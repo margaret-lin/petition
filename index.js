@@ -1,3 +1,11 @@
+/* 
+Things to do for the next project:
+- use middleware for all authentification
+- supertest
+- redis
+- tryout css grid instead of flexbox
+*/
+
 const express = require('express');
 const app = express();
 const hb = require('express-handlebars');
@@ -34,9 +42,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/register', (req, res) => {
-    if (req.session.sigId) {
-        res.redirect('/signed');
-    }
     if (req.session.userId) {
         res.redirect('/petition');
     } else {
@@ -213,14 +218,18 @@ app.get('/signers/:city', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
+    if (!req.session.userId) {
+        res.redirect('/');
+    }
     res.render('profile', {
         layout: 'main'
     });
 });
 
 app.post('/profile', (req, res) => {
-    // console.log('reqbody', req.body);
-
+    if (!req.session.userId) {
+        res.redirect('/');
+    }
     db.getExtraInfo(
         req.body.age || null,
         req.body.city,
@@ -237,7 +246,7 @@ app.post('/profile', (req, res) => {
             ) {
                 console.log('it works!');
 
-                res.redirect('/login');
+                res.redirect('/petition');
             } else {
                 console.log('input not https/http');
                 res.render('profile', {
@@ -257,7 +266,7 @@ app.post('/profile', (req, res) => {
 
 app.get('/profile/edit', (req, res) => {
     if (!req.session.userId) {
-        res.redirect('/register');
+        res.redirect('/');
     }
     db.getProfile().then(({ rows }) => {
         res.render('edit', {
@@ -270,7 +279,7 @@ app.get('/profile/edit', (req, res) => {
 
 app.post('/profile/edit', (req, res) => {
     if (!req.session.userId) {
-        res.redirect('/register');
+        res.redirect('/');
     }
 
     let webUrl = req.body.web;
