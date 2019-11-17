@@ -61,6 +61,11 @@ main {
     justify-content: center;
 }
 
+h1,
+h3 {
+    color: maroon;
+}
+
 .main-box {
     justify-content: center;
     text-align: center;
@@ -74,6 +79,27 @@ main {
     border-radius: 0.625rem;
     padding: 15px 40px;
     color: darkgreen;
+}
+#petition-page {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#petition-box {
+    justify-content: center;
+    align-items: center;
+}
+
+#petition-message {
+    justify-content: flex-end;
+    align-self: center;
+    max-width: 350px;
+}
+
+#petition-message > h3 {
+    color: honeydew;
+    font-size: 35px;
+    text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
 }
 
 .main-content .input-box {
@@ -121,7 +147,7 @@ main {
 
 .buttons {
     height: 50px;
-    width: 120px;
+    width: 150px;
     background-color: gold;
     color: white;
     font-size: 25px;
@@ -130,11 +156,11 @@ main {
 }
 
 #delete-button.buttons {
-    height: 50px;
-    width: 250px;
+    height: 60px;
+    width: 210px;
     background-color: gold;
-    color: white;
-    font-size: 25px;
+    color: lightyellow;
+    font-size: 17px;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -145,12 +171,49 @@ main {
     border: 1px solid grey;
 }
 
+#signers-message {
+    font-size: 16px;
+    color: maroon;
+}
+
 #signer-names {
     text-align: left;
 }
 
 canvas {
     border: 2px black solid;
+}
+
+button {
+    z-index: 1;
+    font-size: inherit;
+    font-family: inherit;
+    color: white;
+    padding: 0.5em 1em;
+    outline: none;
+    border: none;
+    background-color: hsl(236, 32%, 26%);
+}
+
+button:hover {
+    cursor: pointer;
+    animation: jelly 0.5s;
+}
+
+@keyframes jelly {
+    0%,
+    100% {
+        transform: scale(1, 1);
+    }
+    25% {
+        transform: scale(0.9, 1.1);
+    }
+    50% {
+        transform: scale(1.1, 0.9);
+    }
+    75% {
+        transform: scale(0.95, 1.05);
+    }
 }
 
 footer {
