@@ -11,7 +11,7 @@ a:link {
 }
 
 a:visited {
-    color: honeydew;
+    color: forestgreen;
 }
 
 .hidden {
@@ -28,7 +28,7 @@ a:visited {
 }
 
 #redirect-login {
-    color: white;
+    color: darkgreen;
     margin-top: 20px;
     font-size: 14px;
 }
@@ -69,11 +69,11 @@ main {
 .main-content {
     align-items: flex-start;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 252, 0.5);
     margin: 40px 100px;
     border-radius: 0.625rem;
     padding: 15px 40px;
-    color: white;
+    color: darkgreen;
 }
 
 .main-content .input-box {
@@ -84,11 +84,11 @@ main {
     width: 100%;
     padding: 0.625rem 0;
     font-size: 1rem;
-    color: #fff;
+    color: darkgreen;
     letter-spacing: 0.062rem;
     margin-bottom: 1.875rem;
     border: none;
-    border-bottom: 0.065rem solid #fff;
+    border-bottom: 0.065rem solid darkgreen;
     outline: none;
     background: transparent;
 }
@@ -99,7 +99,7 @@ main {
     left: 0;
     padding: 0.625rem 0;
     font-size: 1rem;
-    color: white;
+    color: darkgreen;
     pointer-events: none;
     transition: 0.5s;
 }
@@ -109,7 +109,7 @@ main {
 .main-content .input-box input:not([value='']) ~ label {
     top: -1.125rem;
     left: 0;
-    color: #fdc705;
+    color: limegreen;
     font-size: 0.75rem;
 }
 
@@ -135,8 +135,18 @@ main {
     background-color: gold;
     color: white;
     font-size: 25px;
-    border: 2px dotted grey;
+    border-radius: 10px;
     cursor: pointer;
+}
+
+#signature-box {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    border: 1px solid grey;
+}
+
+#signer-names {
+    text-align: left;
 }
 
 canvas {

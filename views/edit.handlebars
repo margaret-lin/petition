@@ -1,17 +1,74 @@
 <div class="main-content">
+    <h2>Edit your information here :)</h2>
     <form method="POST">
-        <h3>Edit your information here :)</h3>
         {{#with input}}
-        <input type="text" placeholder="First Name" name="first" value="{{first}}"><br>First Name<br><br>
-        <input type="text" placeholder="Last Name" name="last" value="{{last}}"><br>Last Name<br><br>
-        <input type="email" placeholder="Email address" name="email" value="{{email}}"><br>Email address<br><br>
-        <input type="number" placeholder="Age" name="age" value="{{age}}"><br>Age<br><br>
-        <input type="text" placeholder="City" name="city" value="{{city}}"><br>City<br><br>
-        <input type="url" placeholder="Home Page" name="web" value="{{url}}"><br>Home Page<br><br>
-        <input type="password" placeholder="Password" name="pwd" value="{{pwd}}"><br><br>
+        <div class="input-box">
+            <input
+                type="text"
+                name="first"
+                onkeyup="this.setAttribute('value', this.value);"
+                value="{{ first }}"
+            />
+            <label>First Name</label>
+        </div>
+        <div class="input-box">
+            <input
+                type="text"
+                name="last"
+                onkeyup="this.setAttribute('value', this.value);"
+                value="{{ last }}"
+            />
+            <label>Last Name</label>
+        </div>
+        <div class="input-box">
+            <input
+                type="email"
+                name="email"
+                onkeyup="this.setAttribute('value', this.value);"
+                value="{{ email }}"
+            />
+            <label>Email address</label>
+        </div>
+        <div class="input-box">
+            <input
+                type="number"
+                name="age"
+                onkeyup="this.setAttribute('value', this.value);"
+                value="{{ age }}"
+            />
+            <label>Age</label>
+        </div>
+        <div class="input-box">
+            <input
+                type="text"
+                name="city"
+                onkeyup="this.setAttribute('value', this.value);"
+                    value="{{ city }}"
+            />
+            <label>City</label>
+        </div>
+        <div class="input-box">
+            <input
+                type="url"
+                name="web"
+                onkeyup="this.setAttribute('value', this.value);"
+                value="{{ url }}"
+            />
+            <label>Home Page</label>
+        </div>
+        <div class="input-box">
+            <input
+                type="password"
+                name="pwd"
+                onkeyup="this.setAttribute('value', this.value);"
+                value="{{ pwd }}"
+            />
+            <label>Password</label>
+        </div>
+
         {{/with}}
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
-    <button id="continue-button" class="buttons">Continue</button>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
+        <button id="continue-button" class="buttons">Continue</button>
     </form>
     {{#if updated}}
     <p class="success-msg">Your profile has been updated!!!</p>
