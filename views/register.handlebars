@@ -1,16 +1,58 @@
-<div class="main-content">
-    <form method="POST">
-        <h3>Join Margaret's petition and register today to make the world better!</h3>
-        <input type="text" placeholder="First Name" name="first" required><br><br>
-        <input type="text" placeholder="Last Name" name="last" required><br><br>
-        <input type="text" placeholder="Email address" name="email" required><br><br>
-        <input type="password" placeholder="Password" name="pwd" required><br><br>
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
-
-    <button id="signup-button" class="buttons">Sign up</button>
-    {{#if error}}
-    <p id="register-wrong" class="error-msg">Wooooops something went wrong!</p>
-    {{/if}}
-    <p id='redirect-login'>Already registered? Click <a href="/login" id="click-here">here</a> to log in!</p>
+{{!-- <div class="box">
+    <h2>Register</h2>
+    <form>
+        <div class="inputBox">
+        <input type="text" name="first" required onkeyup="this.setAttribute('value', this.value);" value="">
+        <label>First Name</label>
+        </div>
+        <div class="inputBox">
+        <input type="text" name="last" required onkeyup="this.setAttribute('value', this.value);" value="">
+        <label>Last Name</label>
+        </div>
+        <div class="inputBox">
+        <input type="text" name="email" required onkeyup="this.setAttribute('value', this.value);" value="">
+        <label>Email</label>
+        </div>
+        <div class="inputBox">
+        <input type="password" name="pwd" required value=""
+                onkeyup="this.setAttribute('value', this.value);"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+        <label>Password</label>
+        </div>
+        <input type="submit" name="sign-up" value="Sign Up">
     </form>
+            {{#if error}}
+        <p id="register-wrong" class="error-msg">Wooooops something went wrong!</p>
+            {{/if}}
+        <p id='redirect-login'>Already registered? Click <a href="/login" id="click-here">here</a> to log in!</p>
+            
+</div> --}}
+<h3>Join Margaret's petition and register today to make the world better!</h3>
+<div class="main-content">
+                <h2>Register Today!</h2>
+            <form method="POST">
+                <div class="input-box">
+                    <input type="text" name="first" onkeyup="this.setAttribute('value', this.value);" value="" required>
+                    <label>First Name</label>
+                </div>
+                <div class="input-box">
+                    <input type="text" name="last" onkeyup="this.setAttribute('value', this.value);" value="" required>
+                    <label>Last Name</label>
+                </div>
+                <div class="input-box">
+                    <input type="text" name="email" onkeyup="this.setAttribute('value', this.value);" value="" required>
+                    <label>Email Address</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="pwd" onkeyup="this.setAttribute('value', this.value);" value="" required>
+                    <label>Password</label>
+                </div>
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <button id="signup-button" class="buttons">Sign up</button>
+                {{#if error}}
+                <p id="register-wrong" class="error-msg">Wooooops something went wrong!</p>
+                {{/if}}
+                <p id='redirect-login'>Already registered? Click <a href="/login" id="click-here">here</a> to log in!</p>
+            </form>
 </div>

@@ -1,17 +1,10 @@
+* {
+    background-color: ivory;
+}
+
 html,
 body {
     height: 100%;
-    background-image: url(/image.jpg);
-    background-size: cover;
-    margin: 0;
-}
-
-a:link {
-    color: tomato;
-}
-
-a:visited {
-    color: honeydew;
 }
 
 .hidden {
@@ -28,7 +21,7 @@ a:visited {
 }
 
 #redirect-login {
-    color: white;
+    color: rebeccapurple;
     margin-top: 20px;
     font-size: 14px;
 }
@@ -66,53 +59,6 @@ main {
     text-align: center;
 }
 
-.main-content {
-    align-items: flex-start;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.5);
-    margin: 20px 100px;
-    border-radius: 0.625rem;
-    padding: 15px 40px;
-    color: white;
-}
-
-.main-content .input-box {
-    position: relative;
-}
-
-.main-content .input-box input {
-    width: 100%;
-    padding: 0.625rem 0;
-    font-size: 1rem;
-    color: #fff;
-    letter-spacing: 0.062rem;
-    margin-bottom: 1.875rem;
-    border: none;
-    border-bottom: 0.065rem solid #fff;
-    outline: none;
-    background: transparent;
-}
-
-.main-content .input-box label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 0.625rem 0;
-    font-size: 1rem;
-    color: white;
-    pointer-events: none;
-    transition: 0.5s;
-}
-
-.main-content .input-box input:focus ~ label,
-.main-content .input-box input:valid ~ label,
-.main-content .input-box input:not([value='']) ~ label {
-    top: -1.125rem;
-    left: 0;
-    color: #fdc705;
-    font-size: 0.75rem;
-}
-
 #sign-here {
     margin-top: 5px;
     margin-bottom: 30px;
@@ -125,7 +71,7 @@ main {
     background-color: gold;
     color: white;
     font-size: 25px;
-    border-radius: 10px;
+    border: 2px dotted grey;
     cursor: pointer;
 }
 
@@ -141,6 +87,11 @@ main {
 
 canvas {
     border: 2px black solid;
+}
+
+.main-content {
+    align-items: flex-start;
+    justify-content: center;
 }
 
 footer {
