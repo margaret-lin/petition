@@ -25,10 +25,8 @@ exports.getExtraInfo = function getExtraInfo(age, city, web, userId) {
 };
 
 exports.getProfile = function getProfile(userId) {
-    return (
-        db.query(
-            'SELECT users.id, first, last, email, age, city, url FROM users INNER JOIN user_profiles ON (users.id = user_profiles.user_id) WHERE users.id = $1'
-        ),
+    return db.query(
+        'SELECT users.id, first, last, email, age, city, url FROM users INNER JOIN user_profiles ON (users.id = user_profiles.user_id) WHERE users.id = $1',
         [userId]
     );
 };
@@ -60,7 +58,7 @@ exports.updateProfileOptional = function updateProfileOptional(
     userId
 ) {
     return db.query(
-        'INSERT INTO user_profiles(age, city, url, user_id) VALUES ($1, $2, $3, $4) ON CONFLICT (user_id) DO UPDATE SET age = $1, city = $2, url = $3 WHERE user_id = $4',
+        'INSERT INTO user_profiles(age, city, url, user_id) VALUES ($1, $2, $3, $4) ON CONFLICT (user_id) DO UPDATE SET age = $1, city = $2, url = $3 WHERE user_profiles.user_id = $4',
         [age, city, web, userId]
     );
 };
