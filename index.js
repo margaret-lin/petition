@@ -268,7 +268,7 @@ app.get('/profile/edit', (req, res) => {
     if (!req.session.userId) {
         res.redirect('/');
     }
-    db.getProfile().then(({ rows }) => {
+    db.getProfile(req.session.userId).then(({ rows }) => {
         res.render('edit', {
             layout: 'main',
             input: rows[rows.length - 1],
