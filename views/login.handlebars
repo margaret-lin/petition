@@ -24,10 +24,10 @@
         <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
 
         <button id="login-button" class="buttons">Login</button>
-        <p>
+        {{!-- <p>
             Want to edit your profile? Click
             <a href="/profile/edit" id="click-here">here</a> to edit!
-        </p>
+        </p> --}}
         {{#if error}}
         <p id="login-wrong" class="error-msg">
             Woops... email or/and password not correct!

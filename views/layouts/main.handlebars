@@ -9,7 +9,16 @@
     </head>
     <body>
         <header>
-            FOOOOD! 🍦
+                <div id="header-left">
+                    <a href='/register'>FOOOOD! 🍦</a>
+                </div>
+                {{#if isLoggedIn}}
+                <div id="header-right">
+                    <a href='/profile/edit'>Edit Profile</a>
+                    {{!-- <a href='/login'>Login</a> --}}
+                    <a href='/logout'>Logout</a>
+                </div>
+                {{/if}}
         </header>
         <main>
             <div class="main-box">

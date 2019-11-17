@@ -45,13 +45,38 @@ body {
 }
 
 header {
-    height: 50px;
+    height: 60px;
     text-align: center;
     font-family: sans-serif;
-    font-size: 32px;
+    font-size: 25px;
     font-weight: 300;
     margin: 0px;
     background-color: lightpink;
+    vertical-align: middle;
+    line-height: 60px;
+}
+
+#header-left > a,
+#header-right > a {
+    text-decoration: none;
+    padding: 16px;
+    color: #f2f2f2;
+    font-weight: 500;
+}
+
+#header-left > a:hover,
+#header-right > a:hover {
+    background-color: darkgreen;
+}
+
+#header-left {
+    float: left;
+    vertical-align: middle;
+}
+
+#header-right {
+    float: right;
+    vertical-align: middle;
 }
 
 main {
@@ -79,6 +104,7 @@ h3 {
     border-radius: 0.625rem;
     padding: 15px 40px;
     color: darkgreen;
+    min-width: 300px;
 }
 #petition-page {
     display: flex;
@@ -90,12 +116,14 @@ h3 {
     align-items: center;
     margin-left: 10px;
     width: 300px;
+    flex-grow: 2;
 }
 
 #petition-message {
     justify-content: flex-end;
     align-self: center;
     max-width: 350px;
+    flex-grow: 1;
 }
 
 #petition-message > h3 {

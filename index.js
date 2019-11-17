@@ -116,7 +116,8 @@ app.get('/petition', (req, res) => {
         res.redirect('/signed');
     } else {
         res.render('petition', {
-            layout: 'main'
+            layout: 'main',
+            isLoggedIn: true
         });
     }
 });
@@ -147,6 +148,7 @@ app.get('/signed', (req, res) => {
             .then(({ rows }) => {
                 res.render('signed', {
                     layout: 'main',
+                    isLoggedIn: true,
                     num: rows[0].count,
                     image: imageSig
                 });
@@ -173,6 +175,7 @@ app.get('/signers', (req, res) => {
     db.getSigners().then(({ rows }) => {
         res.render('signers', {
             layout: 'main',
+            isLoggedIn: true,
             signers: rows
         });
     });
@@ -189,6 +192,7 @@ app.get('/signers/:city', (req, res) => {
     db.getSignersByCity(city).then(({ rows }) => {
         res.render('signers', {
             layout: 'main',
+            isLoggedIn: true,
             signers: rows
         });
     });
@@ -242,10 +246,10 @@ app.get('/profile/edit', (req, res) => {
         res.redirect('/register');
     }
     db.getProfile().then(({ rows }) => {
-        // console.log(rows);
         res.render('edit', {
             layout: 'main',
-            input: rows[rows.length - 1]
+            input: rows[rows.length - 1],
+            isLoggedIn: true
         });
     });
 });
