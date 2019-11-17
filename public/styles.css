@@ -161,7 +161,6 @@ h3 {
 }
 
 .main-content .input-box input:focus ~ label,
-.main-content .input-box input:valid ~ label,
 .main-content .input-box input:not([value='']) ~ label {
     top: -1.125rem;
     left: 0;

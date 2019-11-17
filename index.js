@@ -23,13 +23,27 @@ app.use(express.static('./public'));
 
 // routes
 app.get('/', (req, res) => {
-    res.redirect('/register');
+    if (!req.session.userId) {
+        res.redirect('/register');
+    }
+    if (req.session.sigId) {
+        res.redirect('/signed');
+    } else {
+        res.redirect('/petition');
+    }
 });
 
 app.get('/register', (req, res) => {
-    res.render('register', {
-        layout: 'main'
-    });
+    if (req.session.sigId) {
+        res.redirect('/signed');
+    }
+    if (req.session.userId) {
+        res.redirect('/petition');
+    } else {
+        res.render('register', {
+            layout: 'main'
+        });
+    }
 });
 
 app.post('/register', (req, res) => {
@@ -259,6 +273,15 @@ app.post('/profile/edit', (req, res) => {
         res.redirect('/register');
     }
 
+    let webUrl = req.body.web;
+    if (
+        !webUrl.startsWith('http://') &&
+        !webUrl.startsWith('https://') &&
+        webUrl.length !== 0
+    ) {
+        webUrl = '';
+    }
+
     if (req.body.pwd === '') {
         Promise.all([
             db
@@ -273,7 +296,7 @@ app.post('/profile/edit', (req, res) => {
                 .updateProfileOptional(
                     req.body.age || null,
                     req.body.city,
-                    req.body.web,
+                    webUrl,
                     req.session.userId
                 )
                 .catch(err => console.log('updateProfileOptional', err))
@@ -296,7 +319,7 @@ app.post('/profile/edit', (req, res) => {
                     .updateProfileOptional(
                         req.body.age || null,
                         req.body.city,
-                        req.body.web,
+                        webUrl,
                         req.session.userId
                     )
                     .catch(err => console.log('updateProfileOptional', err))

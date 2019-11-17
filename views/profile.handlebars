@@ -1,9 +1,19 @@
 <div class="main-content">
     <form method="POST">
         <h3>Cool!! Now why don't you tell us more about yourself :)?</h3>
-        <input type="number" placeholder="Age" name="age"><br><br>
-        <input type="text" placeholder="City" name="city" ><br><br>
-        <input type="url" placeholder="Home Page" name="web"><br><br>
+        <div class="input-box">
+            <input type="number" name="age" onkeyup="this.setAttribute('value', this.value);" value="">
+            <label>Age</label>
+        </div>
+        <div class="input-box">
+            <input type="text" name="city" onkeyup="this.setAttribute('value', this.value);" value="">
+            <label>City</label>
+        </div>
+        <div class="input-box">
+            <input type="url" name="web" onkeyup="this.setAttribute('value', this.value);" value="">
+            <label>Home Page</label>
+        </div>
+        
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
     <button id="next-button" class="buttons">Next</button>
