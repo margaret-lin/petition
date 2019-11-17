@@ -124,7 +124,7 @@ app.post('/login', (req, res) => {
 
 app.get('/petition', (req, res) => {
     if (!req.session.userId) {
-        res.redirect('/register');
+        res.redirect('/');
     }
     if (req.session.sigId) {
         res.redirect('/signed');
@@ -152,7 +152,7 @@ app.post('/petition', (req, res) => {
 
 app.get('/signed', (req, res) => {
     if (!req.session.sigId) {
-        res.redirect('/petition');
+        res.redirect('/');
         return;
     }
     db.getSignature(req.session.sigId).then(({ rows }) => {
@@ -182,7 +182,7 @@ app.post('/signed', (req, res) => {
 
 app.get('/signers', (req, res) => {
     if (!req.session.sigId) {
-        res.redirect('/petition');
+        res.redirect('/');
         return;
     }
 
@@ -330,17 +330,11 @@ app.post('/profile/edit', (req, res) => {
                 .catch(err => console.log('updateProfileOptional', err))
         );
     }
+});
 
-    // res.redirect('/petition');
-
-    // db.getProfile().then(({ rows }) => {
-    //     res.render('edit', {
-    //         layout: 'main',
-    //         input: rows[rows.length - 1],
-    //         updated: true
-    //     });
-    // });
-    // res.redirect('/profile/edit')l
+app.get('/logout', (req, res) => {
+    req.session = null;
+    res.redirect('/');
 });
 
 app.listen(process.env.PORT || 8080, () => console.log('I am listening!!'));
